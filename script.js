@@ -1,4 +1,10 @@
 /* basic arithmetic operations */
+let firstNum = "";
+let secondNum = "";
+let temporaryNum = "";
+let operator = "";
+
+
 
 function add(a, b){
     return a + b;
@@ -16,15 +22,15 @@ function divide(a, b){
     return a / b;
 }
 
-function operate(a, operator, b){
+function operate(operator, a, b){
     if(operator === '+'){
-        add(a, b);
+        return add(a, b);
     }else if(operator === '-'){
-        substract(a, b);
+        return substract(a, b);
     }else if(operator === 'x'){
-        multiply(a, b);
+        return multiply(a, b);
     }else if(operator === '/'){
-        divide(a, b);
+        return divide(a, b);
     }else{
         return 'syntax error'
     }
@@ -44,14 +50,33 @@ function initButtons(num){
 initButtons(10);
 
 let answers = document.querySelector('.answers');
-let singleOne = 0;
 
 function single(e){
-    let a = e.target.innerText;
-    console.log(a);
-    this.singleOne = a;
-};
+    temporaryNum += e.target.innerText;
+    console.log(temporaryNum);
+}; 
 
 answers.addEventListener('click', single);
 
-console.log(singleOne);
+function updateOp(e){
+    operator = e.target.innerText;
+    firstNum = temporaryNum;
+    temporaryNum = "";
+};
+
+let operating = document.querySelector('.operator');
+
+operating.addEventListener('click', updateOp);
+
+function equal(e){
+    secondNum = temporaryNum;
+    let a = Number(firstNum);
+    let b = Number(secondNum);
+    let result = operate(operator, a, b);
+    firstNum = "";
+    secondNum = "";
+    temporaryNum = "";
+};
+
+let equality = document.querySelector('.equality');
+equality.addEventListener('click', equal);
